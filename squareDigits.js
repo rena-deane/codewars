@@ -1,12 +1,6 @@
-squareDigits = (number) => {
-  let numStr = number.toString().split('')
+squareDigits = (num) => {
+  let splitNum = num.toString().split('')
   let arr = ''
-  numStr.map((num) => {
-    num = Number(num)
-    arr += num*num
-  })
- 
-  arr = Number(arr)
-  return arr
-  
+  splitNum.map((num) => arr += Number(num)*Number(num))
+  return Number(arr)  
 }
