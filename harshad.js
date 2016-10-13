@@ -53,3 +53,74 @@ var Harshad = ( function() {
   }
 
 } () )
+
+// Best practice solution
+
+var Harshad = ( function() {
+  'use strict';
+  var MAX_SAFE_INTEGER = Math.pow( 2, 53 ) - 1;
+
+  return {
+    isValid: function(number) {
+      if (number === Infinity) {
+        throw new TypeError("null is not an integer");
+      }
+      if (typeof number != 'number' || Math.floor(number) != number) {
+        throw new TypeError(number + " is not an integer");
+      }
+      if (number < 0 || number > MAX_SAFE_INTEGER) {
+        throw new RangeError(number + " is not in the range [ 1, " + MAX_SAFE_INTEGER + " ]");
+      }
+      var n = number;
+      var sumDigits = 0;
+      while (n > 0) {
+        sumDigits += n % 10;
+        n = n / 10 | 0;
+      }
+      return number % sumDigits == 0;
+    },
+    getNext: function(number) {
+      if (number === Infinity) {
+        throw new TypeError("null is not an integer");
+      }
+      if (typeof number != 'number' || Math.floor(number) != number) {
+        throw new TypeError(number + " is not an integer");
+      }
+      if (number < 0 || number > MAX_SAFE_INTEGER) {
+        throw new RangeError(number + " is not in the range [ 0, " + MAX_SAFE_INTEGER + " ]");
+      }
+      var n = number + 1;
+      while (!this.isValid(n)) {
+        n++;
+      }
+      return n;
+    },
+    getSerie: function(count, start) {
+      if (start === undefined) {
+        start = 0;
+      }
+      if (count === Infinity || start == Infinity) {
+        throw new TypeError("null is not an integer");
+      }
+      if (typeof count != 'number' || Math.floor(count) != count) {
+        throw new TypeError(count + " is not an integer");
+      }
+      if (typeof start != 'number' || Math.floor(start) != start) {
+        throw new TypeError(start + " is not an integer");
+      }
+      if (count < 1 || count > MAX_SAFE_INTEGER) {
+        throw new RangeError(count + " is not in the range [ 1, " + MAX_SAFE_INTEGER + " ]");
+      }
+      if (start < 0 || start > MAX_SAFE_INTEGER) {
+        throw new RangeError(start + " is not in the range [ 0, " + MAX_SAFE_INTEGER + " ]");
+      }
+      var result = [];
+      while (result.length < count) {
+        start = Harshad.getNext(start);
+        result.push(start);
+      }
+      return result;
+    }
+  };
+
+} () );
