@@ -1,52 +1,43 @@
+// Refactor my solution
+
 var Harshad = ( function() {
   'use strict'
 
   return {
+    //check if number is a Harshad number
     isValid: function( number ) {
-      const strNumber = number.toString()
-      const arrNumber = strNumber.split('')
+      const arrNumber = number.toString().split('')
       let sum = 0
       
       arrNumber.map(num => {
         sum += Number(num)
       })
       
-      const isValid = number % sum == 0 ? true : false
-      return isValid
+      return number % sum == 0 ? true : false
     },
-
+    
+    //check what Harshad number comes next
     getNext: function( number ) {
       let num = number + 1
       
-      if (Harshad.isValid(num)) {
-        return num
+      while (!this.isValid(num)) {
+        num++;
       }
       
-      return Harshad.getNext(num)
-      
+      return num;
     },
+    
     
     getSerie: function(count, start) {
       let arrNum = []
-
+      let next = start || 0
       
-      if (start !== undefined) {
-        let next = start
-        for (var i = 0; i < count; i++) {
-          let valid = Harshad.getNext(next)
+      for (var i = 0; i < count; i++) {
+        let valid = Harshad.getNext(next)
 
-          arrNum.push(valid)
-          next = valid
-        }
-      } else {
-          let next = 0
-          for (var i = 0; i < count; i++) {
-            let valid = Harshad.getNext(next)
-            
-            arrNum.push(valid)
-            next = valid
-          }
-        }
+        arrNum.push(valid)
+        next = valid
+      }
       
       return arrNum
     }
