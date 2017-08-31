@@ -1,13 +1,17 @@
 function generateBC(url, separator) {
 //ignote these words if > 30 char
-  let ignore = ["THE","OF","IN","FROM","BY","WITH","AND", "OR", "FOR", "TO", "AT", "A"]
+  let ignore = ["A", "THE","OF","IN", "WITH","AND", "OR", "FOR", "TO", "AT", "FROM","BY"]
   let crumbs = []
   let ref = ['<a href="','">', '</a>', '<span class="active">', '</span>'];
+  //seperate url from '/'
   let arr = url.split("/")
   
   arr[arr.length-1].includes("index") ? arr.pop() : arr
+  console.log("arr1", arr)
   arr[0].includes("http") ? arr.shift() : arr
-  arr = arr.filter(function(item){ return (item.length > 0) })
+  console.log("arr2", arr)
+  arr = arr.filter(item => item.length > 0)
+  console.log("arr3", arr)
   
   let breadcrumb = arr.map(function(array, index){
 	  if (array.includes("?")){ array = array.slice(0, array.lastIndexOf("?")); }
